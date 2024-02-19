@@ -6,7 +6,8 @@ export function setupTimer(element) {
   const setCounter = (start) => {
 
     return () => {
-      element.innerHTML += `${new Date() - start}<br>`;
+    // element.innerHTML += `${new Date() - start}<br>`;
+    element.innerHTML += `AAA<br>`;
    }
 
     
