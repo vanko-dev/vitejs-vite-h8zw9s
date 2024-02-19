@@ -13,7 +13,7 @@ export function setupTimer(element) {
   };
 
   //element.addEventListener('click', () => setCounter(counter + 1));
-  setTimeout(setCounter(new Date()), 5 * 1000);
+  setTimeout(setCounter(new Date()), 20 * 1000);
 
   // const a = debounce(setCounter, 20 * 1000);
   //a('111');
