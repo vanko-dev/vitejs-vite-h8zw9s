@@ -7,8 +7,7 @@ export function setupTimer(element) {
 
     return () => {
       element.innerHTML += `${new Date() - start}<br>`;
-      setTimeout(setCounter(new Date()), 5 * 1000);
-    }
+   }
 
     
   };
