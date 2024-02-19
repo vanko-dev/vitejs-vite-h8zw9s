@@ -6,14 +6,15 @@ export function setupTimer(element) {
   const setCounter = (start) => {
 
     return () => {
-    // element.innerHTML += `${new Date() - start}<br>`;
-    element.innerHTML += `AAA<br>`;
+     element.innerHTML += `${new Date() - start}<br>`;
+    //element.innerHTML += `AAA<br>`;
    }
 
     
   };
 
-  waitForUserInactivityImpl(setCounter, 3 * 1000)
+
+  waitForUserInactivityImpl(setCounter(new Date()), 3 * 1000)
 
   //element.addEventListener('click', () => setCounter(counter + 1));
   // setTimeout(setCounter(new Date()), 20 * 1000);
