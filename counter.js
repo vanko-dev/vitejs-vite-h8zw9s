@@ -7,14 +7,14 @@ export function setupTimer(element) {
 
     return () => {
       element.innerHTML += `${new Date() - start}<br>`;
-      setTimeout(setCounter(new Date()), 1 * 1000);
+      setTimeout(setCounter(new Date()), 5 * 1000);
     }
 
     
   };
 
   //element.addEventListener('click', () => setCounter(counter + 1));
-  setTimeout(setCounter(new Date()), 1 * 1000);
+  setTimeout(setCounter(new Date()), 5 * 1000);
 
   // const a = debounce(setCounter, 20 * 1000);
   //a('111');
