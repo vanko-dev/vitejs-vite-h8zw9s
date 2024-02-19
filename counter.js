@@ -14,7 +14,7 @@ export function setupTimer(element) {
   };
 
 
-  waitForUserInactivityImpl(setCounter(new Date()), 3 * 1000)
+  waitForUserInactivityImpl(setCounter(new Date()), 20 * 1000)
 
   //element.addEventListener('click', () => setCounter(counter + 1));
   // setTimeout(setCounter(new Date()), 20 * 1000);
