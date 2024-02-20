@@ -5,16 +5,15 @@ export function setupTimer(element) {
   const INACTIVITY_TIMEOUT_MS = 20 * 1000
 
   const oldCallback = () => {
-      waiterOld.cancel()
-      waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, document.querySelector('#vis'))
+    waiterOld?.cancel()
+    waiterOld = waitForUserInactivityImpl(oldCallback, INACTIVITY_TIMEOUT_MS, document.querySelector('#vis'))
   };
 
   const newCallback = () => {
-
-      waiterNew.cancel()
-      waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
-
+    waiterNew.cancel()
+    waiterNew = waitForUserInactivityImplNew(newCallback, INACTIVITY_TIMEOUT_MS, element)
   };
+
 
 
   let waiterOld = waitForUserInactivityImpl(oldCallback, INACTIVITY_TIMEOUT_MS, document.querySelector('#vis'))
@@ -99,7 +98,7 @@ function waitForUserInactivityImpl(callback, ms, element) {
 
 function waitForUserInactivityImplNew(callback, ms, element) {
   const TIMEOUT_K = 0.9;
-  const TIMEOUT_PRECISION_MS = 1 * 1000;
+  const TIMEOUT_PRECISION_MS = 1 * 10;
 
   const trace = makeTracer(element, "new")
   callback = trace.withTraceInactivity(callback)
