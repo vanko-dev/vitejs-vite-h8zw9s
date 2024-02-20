@@ -6,7 +6,6 @@ const sec = (ms) => Math.round(ms / 100) / 10
 const showtTime = (date) =>
   date.toLocaleTimeString("en-us", { minute: "2-digit", hour12: false, second: "2-digit" });
 
-
 export function startTimer() {
   const INACTIVITY_TIMEOUT_MS = 15 * 1000
 
@@ -24,6 +23,4 @@ export function startTimer() {
     waiterOld = waitForUserInactivityImplOld(oninactivityOld, INACTIVITY_TIMEOUT_MS)
   };
   let waiterOld = waitForUserInactivityImplOld(oninactivityOld, INACTIVITY_TIMEOUT_MS)
-
-
 }
