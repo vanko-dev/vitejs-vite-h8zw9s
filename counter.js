@@ -1,5 +1,7 @@
 import debounce from 'lodash.debounce';
 
+const round = (ms) => Math.round(ms * 10) / 10
+
 export function setupTimer(element) {
   element.innerHTML = '';
   const INACTIVITY_TIMEOUT_MS = 20 * 1000
@@ -8,19 +10,24 @@ export function setupTimer(element) {
     waiterOld?.cancel()
     waiterOld = waitForUserInactivityImpl(oldCallback, INACTIVITY_TIMEOUT_MS, document.querySelector('#vis'))
   };
+  let waiterOld = waitForUserInactivityImpl(oldCallback, INACTIVITY_TIMEOUT_MS, document.querySelector('#vis'))
+
 
   const newCallback = () => {
     waiterNew.cancel()
     waiterNew = waitForUserInactivityImplNew(newCallback, INACTIVITY_TIMEOUT_MS, element)
   };
-
-
-
-  let waiterOld = waitForUserInactivityImpl(oldCallback, INACTIVITY_TIMEOUT_MS, document.querySelector('#vis'))
-
   let waiterNew = waitForUserInactivityImplNew(newCallback, INACTIVITY_TIMEOUT_MS, element)
 
-  //let timer = setTimeout(setCounter(new Date()), INACTIVITY_TIMEOUT_MS)
+  let prevTimer = new Date()
+  const timerCallback = () => {
+    const log = `tmr inactivity ${new Date().toLocaleTimeString()} ${round((new Date() - prevTimer) / 1000)}<br>`;
+    document.querySelector('#timer').innerHTML += `${log}<br>`;
+    clearTimeout(timer)
+    timer = setTimeout(timerCallback, INACTIVITY_TIMEOUT_MS)
+    prevTimer = new Date()
+  };
+  let timer = setTimeout(timerCallback, INACTIVITY_TIMEOUT_MS)
 
   //element.addEventListener('click', () => setCounter(counter + 1));
   // setTimeout(setCounter(new Date()), 20 * 1000);
@@ -44,7 +51,7 @@ const makeTracer = (element, prefix = "") => {
     return result
   }
 
-  const round = (ms) => Math.round(ms * 10) / 10
+  
 
   const withTraceInactivity = (inactivity) => {
     const result = (...args) => {
