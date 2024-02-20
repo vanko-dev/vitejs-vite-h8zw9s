@@ -9,7 +9,7 @@ export const waitForUserInactivityImpl = (oninactivity, ms) => {
     document.addEventListener("visibilitychange", onVisibilityChange);
     const getNextCheckInMs = () => Math.max((activityDetector.lastActivityTime() + ms - Date.now()) * TIMEOUT_K, TIMEOUT_PRECISION_MS);
   
-    const timeout = setTimeout(checkInactivityTime, getNextCheckInMs());
+    let timeout = setTimeout(checkInactivityTime, getNextCheckInMs());
   
     function resume() {
       // todo
@@ -24,7 +24,7 @@ export const waitForUserInactivityImpl = (oninactivity, ms) => {
       if (inactivityTimeMs > ms) {
         oninactivity(inactivityTimeMs);
       } else {
-        setTimeout(checkInactivityTime, getNextCheckInMs());
+        timeout = setTimeout(checkInactivityTime, getNextCheckInMs());
       }
     }
   
