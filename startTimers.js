@@ -9,6 +9,8 @@ const showtTime = (date) =>
 export function startTimer() {
   const INACTIVITY_TIMEOUT_MS = 15 * 1000
 
+  fuss()
+
   const oninactivityNew = (inactivityTimeMs) => {
     waiterNew.cancel()
     document.querySelector("#new").innerHTML += `${showtTime(new Date())}-${sec(inactivityTimeMs)}<br/>`
@@ -23,4 +25,14 @@ export function startTimer() {
     waiterOld = waitForUserInactivityImplOld(oninactivityOld, INACTIVITY_TIMEOUT_MS)
   };
   let waiterOld = waitForUserInactivityImplOld(oninactivityOld, INACTIVITY_TIMEOUT_MS)
+}
+
+function fuss() {
+  Array.from({ length: 1000 }, () => setTimeout(pieceOfWork, Math.random() * 1000 * 10))
+}
+
+function pieceOfWork() {
+  const start = new Date()
+  while ((new Date() - start) < Math.random() * 100);
+  setTimeout(pieceOfWork, Math.random() * 1000 * 10)
 }
