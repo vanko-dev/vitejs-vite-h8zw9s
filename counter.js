@@ -4,23 +4,24 @@ export function setupTimer(element) {
   element.innerHTML = '';
   const INACTIVITY_TIMEOUT_MS = 20 * 1000
 
-  const setCounter = (start) => {
-
-    return () => {
-      // element.innerHTML += `${new Date() - start}<br>`;
-      //element.innerHTML += `AAA<br>`;
+  const oldCallback = () => {
       waiterOld.cancel()
-      waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS,  document.querySelector('#vis'))
+      waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, document.querySelector('#vis'))
+  };
+
+  const newCallback = () => {
 
       waiterNew.cancel()
       waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
-    }
+
   };
 
 
-  let waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS,  document.querySelector('#vis'))
-  let waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
-  let timer = setTimeout(setCounter(new Date()), INACTIVITY_TIMEOUT_MS)
+  let waiterOld = waitForUserInactivityImpl(oldCallback, INACTIVITY_TIMEOUT_MS, document.querySelector('#vis'))
+
+  let waiterNew = waitForUserInactivityImplNew(newCallback, INACTIVITY_TIMEOUT_MS, element)
+
+  //let timer = setTimeout(setCounter(new Date()), INACTIVITY_TIMEOUT_MS)
 
   //element.addEventListener('click', () => setCounter(counter + 1));
   // setTimeout(setCounter(new Date()), 20 * 1000);
@@ -44,7 +45,7 @@ const makeTracer = (element, prefix = "") => {
     return result
   }
 
-  const round = (ms) => Math.round(ms * 10)/10
+  const round = (ms) => Math.round(ms * 10) / 10
 
   const withTraceInactivity = (inactivity) => {
     const result = (...args) => {
