@@ -10,7 +10,7 @@ export function setupTimer(element) {
       // element.innerHTML += `${new Date() - start}<br>`;
       //element.innerHTML += `AAA<br>`;
       waiterOld.cancel()
-      waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
+      waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS,  document.querySelector('#vis'))
 
       waiterNew.cancel()
       waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
@@ -18,7 +18,7 @@ export function setupTimer(element) {
   };
 
 
-  let waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
+  let waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS,  document.querySelector('#vis'))
   let waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
 
   //element.addEventListener('click', () => setCounter(counter + 1));
@@ -168,12 +168,12 @@ const createUserActivityDetector = () => {
 };
 
 
-document.addEventListener("visibilitychange", () => {
-  const vis = document.querySelector('#vis')
+// document.addEventListener("visibilitychange", () => {
+//   const vis = document.querySelector('#vis')
 
-  if (document.visibilityState === "visible") {
-    vis.innerHTML += `${new Date().toLocaleTimeString()} - visible<br>`;
-  } else {
-    vis.innerHTML += `${new Date().toLocaleTimeString()} - hidden<br>`;
-  }
-});
+//   if (document.visibilityState === "visible") {
+//     vis.innerHTML += `${new Date().toLocaleTimeString()} - visible<br>`;
+//   } else {
+//     vis.innerHTML += `${new Date().toLocaleTimeString()} - hidden<br>`;
+//   }
+// });
