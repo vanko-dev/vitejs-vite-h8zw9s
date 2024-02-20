@@ -115,6 +115,7 @@ function waitForUserInactivityImplNew(callback, ms, element) {
 
   function checkInactivityTime() {
     const lastActivityTime = activityDetector.lastActivityTime();
+    clearTimeout(timeout);
     if (Date.now() - lastActivityTime > ms) {
       callback();
     } else {
@@ -125,7 +126,6 @@ function waitForUserInactivityImplNew(callback, ms, element) {
   function onVisibilityChange() {
     if (document.visibilityState === "visible") {
       checkInactivityTime();
-    } else {
     }
   }
 
