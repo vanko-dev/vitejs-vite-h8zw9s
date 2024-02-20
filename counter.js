@@ -2,7 +2,7 @@ import debounce from 'lodash.debounce';
 
 export function setupTimer(element) {
   element.innerHTML = '';
-  const INACTIVITY_TIMEOUT_MS = 5 * 1000
+  const INACTIVITY_TIMEOUT_MS = 20 * 1000
 
   const setCounter = (start) => {
 
