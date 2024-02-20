@@ -6,15 +6,13 @@ export function setupTimer(element) {
   const setCounter = (start) => {
 
     return () => {
-     element.innerHTML += `${new Date() - start}<br>`;
-    //element.innerHTML += `AAA<br>`;
-   }
-
-    
+      // element.innerHTML += `${new Date() - start}<br>`;
+      //element.innerHTML += `AAA<br>`;
+    }
   };
 
 
-  waitForUserInactivityImpl(setCounter(new Date()), 20 * 1000)
+  waitForUserInactivityImpl(setCounter(new Date()), 3 * 1000, element)
 
   //element.addEventListener('click', () => setCounter(counter + 1));
   // setTimeout(setCounter(new Date()), 20 * 1000);
@@ -24,11 +22,37 @@ export function setupTimer(element) {
 }
 
 
-function waitForUserInactivityImpl(callback, ms) {
+const makeTracer = (element) => {
+  let lastActivity = new Date()
+
+  const withTraceActivity = (reportActivity) => {
+    return (...args) => {
+     // console.log("activity", new Date().toTimeString(), ...args)
+     lastActivity = new Date()
+      reportActivity(...args)
+    }
+  }
+
+  const withTraceInactivity = (inactivity) => {
+    return (...args) => {
+      //console.log("inactivity", lastActivity.toTimeString(), new Date().toTimeString(), (new Date() - lastActivity) / 1000 )
+      const log = `inactivity ${ lastActivity.toLocaleTimeString()} ${new Date().toLocaleTimeString()} ${(new Date() - lastActivity) / 1000}<br>`;
+      console.log(log)
+      element.innerHTML += `${ log}<br>`;
+      inactivity(...args)
+    }
+  }
+
+  return { withTraceActivity, withTraceInactivity }
+}
+
+function waitForUserInactivityImpl(callback, ms, element) {
   let reportActivity;
+  const tracer = makeTracer(element)
 
   const activate = () => {
-    reportActivity = debounce(callback, ms);
+    const callbackWithTrace = tracer.withTraceInactivity(callback)
+    reportActivity = tracer.withTraceActivity(debounce(callbackWithTrace, ms));
     reportActivity("start");
 
     document.addEventListener("mousemove", reportActivity, true);
@@ -54,3 +78,11 @@ function waitForUserInactivityImpl(callback, ms) {
     resume: activate,
   };
 }
+
+// document.addEventListener("visibilitychange", () => {
+//   if (document.visibilityState === "visible") {
+//     backgroundMusic.play();
+//   } else {
+//     backgroundMusic.pause();
+//   }
+// });
