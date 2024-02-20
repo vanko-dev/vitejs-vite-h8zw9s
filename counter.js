@@ -12,14 +12,15 @@ export function setupTimer(element) {
       waiterOld.cancel()
       waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS,  document.querySelector('#vis'))
 
-      waiterNew.cancel()
-      waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
+      // waiterNew.cancel()
+      // waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
     }
   };
 
 
   let waiterOld = waitForUserInactivityImpl(setCounter(new Date()), INACTIVITY_TIMEOUT_MS,  document.querySelector('#vis'))
-  let waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
+  // let waiterNew = waitForUserInactivityImplNew(setCounter(new Date()), INACTIVITY_TIMEOUT_MS, element)
+  // let timer = setTimeout(setCounter(new Date()), INACTIVITY_TIMEOUT_MS)
 
   //element.addEventListener('click', () => setCounter(counter + 1));
   // setTimeout(setCounter(new Date()), 20 * 1000);
