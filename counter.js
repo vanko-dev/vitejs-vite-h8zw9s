@@ -8,11 +8,13 @@ export function setupTimer(element) {
     return () => {
       // element.innerHTML += `${new Date() - start}<br>`;
       //element.innerHTML += `AAA<br>`;
+      waiter.cancel()
+      waiter = waitForUserInactivityImpl(setCounter(new Date()), 20 * 1000, element)
     }
   };
 
 
-  waitForUserInactivityImpl(setCounter(new Date()), 20 * 1000, element)
+  let waiter = waitForUserInactivityImpl(setCounter(new Date()), 20 * 1000, element)
 
   //element.addEventListener('click', () => setCounter(counter + 1));
   // setTimeout(setCounter(new Date()), 20 * 1000);
@@ -26,21 +28,27 @@ const makeTracer = (element) => {
   let lastActivity = new Date()
 
   const withTraceActivity = (reportActivity) => {
-    return (...args) => {
+    const result = (...args) => {
       // console.log("activity", new Date().toTimeString(), ...args)
       lastActivity = new Date()
       reportActivity(...args)
     }
+
+    result.cancel = reportActivity.cancel
+    return result
   }
 
   const withTraceInactivity = (inactivity) => {
-    return (...args) => {
+    const result = (...args) => {
       //console.log("inactivity", lastActivity.toTimeString(), new Date().toTimeString(), (new Date() - lastActivity) / 1000 )
       const log = `inactivity ${lastActivity.toLocaleTimeString()} ${new Date().toLocaleTimeString()} ${(new Date() - lastActivity) / 1000}<br>`;
       console.log(log)
       element.innerHTML += `${log}<br>`;
       inactivity(...args)
     }
+
+    result.cancel = inactivity.cancel
+    return result
   }
 
   return { withTraceActivity, withTraceInactivity }
