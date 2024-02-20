@@ -21,9 +21,9 @@ export function startTimer() {
   const oninactivityOld = (inactivityTimeMs) => {
     waiterOld.cancel()
     document.querySelector("#old").innerHTML += `${showtTime(new Date())}-${sec(inactivityTimeMs)}<br/>`
-    waiterOld = waitForUserInactivityImplNew(oninactivityOld, INACTIVITY_TIMEOUT_MS)
+    waiterOld = waitForUserInactivityImplOld(oninactivityOld, INACTIVITY_TIMEOUT_MS)
   };
-  let waiterOld = waitForUserInactivityImplNew(oninactivityOld, INACTIVITY_TIMEOUT_MS)
+  let waiterOld = waitForUserInactivityImplOld(oninactivityOld, INACTIVITY_TIMEOUT_MS)
 
 
 }
