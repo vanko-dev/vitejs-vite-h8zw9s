@@ -13,7 +13,7 @@ const track = () => {
   }
 
   function inactivity(inact) {
-    return (...args) => {
+    return () => {
       return inact(new Date() - lastActivity)
     }
   }
