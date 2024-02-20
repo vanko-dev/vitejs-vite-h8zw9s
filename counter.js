@@ -27,8 +27,8 @@ const makeTracer = (element) => {
 
   const withTraceActivity = (reportActivity) => {
     return (...args) => {
-     // console.log("activity", new Date().toTimeString(), ...args)
-     lastActivity = new Date()
+      // console.log("activity", new Date().toTimeString(), ...args)
+      lastActivity = new Date()
       reportActivity(...args)
     }
   }
@@ -36,9 +36,9 @@ const makeTracer = (element) => {
   const withTraceInactivity = (inactivity) => {
     return (...args) => {
       //console.log("inactivity", lastActivity.toTimeString(), new Date().toTimeString(), (new Date() - lastActivity) / 1000 )
-      const log = `inactivity ${ lastActivity.toLocaleTimeString()} ${new Date().toLocaleTimeString()} ${(new Date() - lastActivity) / 1000}<br>`;
+      const log = `inactivity ${lastActivity.toLocaleTimeString()} ${new Date().toLocaleTimeString()} ${(new Date() - lastActivity) / 1000}<br>`;
       console.log(log)
-      element.innerHTML += `${ log}<br>`;
+      element.innerHTML += `${log}<br>`;
       inactivity(...args)
     }
   }
@@ -79,12 +79,13 @@ function waitForUserInactivityImpl(callback, ms, element) {
   };
 }
 
-const vis = document.querySelector('#counter')
 
 document.addEventListener("visibilitychange", () => {
+  const vis = document.querySelector('#vis')
+
   if (document.visibilityState === "visible") {
-    element.innerHTML += `${new Date().toLocaleTimeString()} - visible<br>`;
+    vis.innerHTML += `${new Date().toLocaleTimeString()} - visible<br>`;
   } else {
-    element.innerHTML += `${new Date().toLocaleTimeString()} - hidden<br>`;
+    vis.innerHTML += `${new Date().toLocaleTimeString()} - hidden<br>`;
   }
 });
