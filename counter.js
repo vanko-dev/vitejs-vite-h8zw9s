@@ -47,8 +47,8 @@ const makeTracer = (element, prefix = "") => {
 
   const withTraceInactivity = (inactivity) => {
     const result = (...args) => {
-      //console.log("inactivity", lastActivity.toTimeString(), new Date().toTimeString(), (new Date() - lastActivity) / 1000 )
-      const log = `${prefix} inactivity ${lastActivity.toLocaleTimeString()} ${new Date().toLocaleTimeString()} ${round((new Date() - lastActivity) / 1000)}<br>`;
+      //const log = `${prefix} inactivity ${lastActivity.toLocaleTimeString()} ${new Date().toLocaleTimeString()} ${round((new Date() - lastActivity) / 1000)}<br>`;
+      const log = `${prefix} inactivity ${new Date().toLocaleTimeString()} ${round((new Date() - lastActivity) / 1000)}<br>`;
       console.log(log)
       element.innerHTML += `${log}<br>`;
       inactivity(...args)
