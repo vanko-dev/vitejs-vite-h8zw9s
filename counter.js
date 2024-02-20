@@ -79,10 +79,12 @@ function waitForUserInactivityImpl(callback, ms, element) {
   };
 }
 
-// document.addEventListener("visibilitychange", () => {
-//   if (document.visibilityState === "visible") {
-//     backgroundMusic.play();
-//   } else {
-//     backgroundMusic.pause();
-//   }
-// });
+const vis = document.querySelector('#counter')
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    element.innerHTML += `${new Date().toLocaleTimeString()} - visible<br>`;
+  } else {
+    element.innerHTML += `${new Date().toLocaleTimeString()} - hidden<br>`;
+  }
+});
