@@ -58,6 +58,8 @@ h1 {
 
 .card {
   padding: 1em;
+  display: flex;
+  align-items: start;
 }
 
 .read-the-docs {
