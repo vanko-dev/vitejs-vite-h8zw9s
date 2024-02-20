@@ -8,7 +8,11 @@ export const waitForUserInactivityImpl = (oninactivity, ms) => {
   let timeout = setTimeout(checkInactivityTime, getNextCheckInMs());
 
   document.addEventListener("visibilitychange", onVisibilityChange);
-  const getNextCheckInMs = () => Math.max((activityDetector.lastActivityTime() + ms - Date.now()) * TIMEOUT_K, TIMEOUT_PRECISION_MS);
+  
+  function getNextCheckInMs() {
+    const nextInMs = (activityDetector.lastActivityTime() + ms - Date.now()) * TIMEOUT_K;
+    return Math.max(nextInMs, TIMEOUT_PRECISION_MS);
+  }
 
   function checkInactivityTime() {
     clearTimeout(timeout);
