@@ -7,6 +7,7 @@ document.querySelector('#app').innerHTML = `
     <div class="card">
       <button id="new" type="button"></button>
       <button id="old" type="button"></button>
+      <button id="timer" type="button"></button>
     </div>
   </div>
 `;
